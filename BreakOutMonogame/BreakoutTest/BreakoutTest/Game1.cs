@@ -14,8 +14,11 @@ namespace BreakoutTest
         SpriteBatch spriteBatch;
 
 
+        //Services
         InputHandler input;
         GameConsole console;
+
+        //Components
         BlockManager bm;
         Paddle paddle;
         Ball ball;
@@ -34,12 +37,10 @@ namespace BreakoutTest
             this.Components.Add(console);
 
             
-            
             ball = new Ball(this);
             this.Components.Add(ball);
             paddle = new Paddle(this, ball);
             this.Components.Add(paddle);
-            
             
             bm = new BlockManager(this, ball);
             this.Components.Add(bm);
@@ -74,7 +75,7 @@ namespace BreakoutTest
             this.ball.Location = new Vector2(200, 300);
             this.paddle.Location = new Vector2(300, 450);
 
-            // TODO: use this.Content to load your game content here
+            base.LoadContent();
         }
 
         /// <summary>
@@ -95,8 +96,7 @@ namespace BreakoutTest
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-
-            // TODO: Add your update logic here
+            
 
             base.Update(gameTime);
         }
@@ -109,11 +109,7 @@ namespace BreakoutTest
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
-            foreach (var block in bm.Blocks)
-            {
-                block.Draw(gameTime);
-            }
+            
             base.Draw(gameTime);
         }
     }

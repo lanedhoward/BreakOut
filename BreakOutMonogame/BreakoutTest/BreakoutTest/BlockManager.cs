@@ -9,33 +9,44 @@ using Microsoft.Xna.Framework.Input;
 
 namespace BreakoutTest
 {
-    class BlockManager : GameComponent
+    class BlockManager : DrawableGameComponent
     {
 
-        public List<Block> Blocks { get; private set; }
-        int width, height;
-        int margin;
+        public List<Block> Blocks { get; private set; } //List of Blocks the are managed by Block Manager
+
+        
         Ball ball;
 
-        List<Block> blocksToRemove;
-        bool reflected;
+        List<Block> blocksToRemove; //list of block to remove probably because they were hit
+        
         
         public BlockManager(Game game, Ball b)
             : base(game)
         {
             this.Blocks = new List<Block>();
             this.blocksToRemove = new List<Block>();
-            this.width = 24;
-            this.height = 2;
-            this.margin = 1;
+            
             this.ball = b;
         }
 
         public override void Initialize()
         {
+            LoadBlocks();
+            base.Initialize();
+        }
+
+
+        
+        public virtual void LoadBlocks()
+        {
             Block b;
-            //b.Initialize();
-            
+            int width, height; //widh and height of block grid measured in block
+            int margin; //Margin between blocks
+            width = 24; 
+            height = 2;
+            margin = 1;
+
+            //Create grid of blocks
             for (int w = 0; w < width; w++)
             {
                 for (int h = 0; h < height; h++)
@@ -46,25 +57,48 @@ namespace BreakoutTest
                     Blocks.Add(b);
                 }
             }
-            
-            base.Initialize();
+
         }
 
+        bool reflected; //the ball should only reflect once even if it hits two bricks
         public override void Update(GameTime gameTime)
         {
-            this.reflected = false;
+            this.reflected = false; //only reflect once per update
+            UpdateCheckBlocksForCollision(gameTime);
+            UpdateRemoveDisabledBlocks();
+
+            base.Update(gameTime);
+        }
+
+        /// <summary>
+        /// Removes disabled blocks from list
+        /// </summary>
+        private void UpdateRemoveDisabledBlocks()
+        {
+            //remove disabled blocks
+            foreach (var block in blocksToRemove)
+            {
+                Blocks.Remove(block);
+                ScoreManager.Score++;
+            }
+            blocksToRemove.Clear();
+        }
+
+        private void UpdateCheckBlocksForCollision(GameTime gameTime)
+        {
             foreach (Block b in Blocks)
             {
                 if (b.Enabled)
                 {
                     b.Update(gameTime);
                     //Ball Collision
-                    if (b.Intersects(ball))
+                    if (b.Intersects(ball)) //rectagle collision
                     {
-                        b.Enabled = false;
-                        b.Visible = false;
-                        blocksToRemove.Add(b);
-                        if (!reflected)
+                        //hit
+                        b.Enabled = false;  //Don't update block anymore
+                        b.Visible = false;  //Don't draw clock anymore
+                        blocksToRemove.Add(b);  //Ball is hit add it to remove list
+                        if (!reflected) //only reflect once
                         {
                             ball.Direction.Y *= -1;
                             this.reflected = true;
@@ -72,16 +106,17 @@ namespace BreakoutTest
                     }
                 }
             }
+        }
 
-            //remove disaplbled blocks
-            foreach (var block in blocksToRemove)
+        public override void Draw(GameTime gameTime)
+        {
+            
+            foreach (var block in this.Blocks)
             {
-                Blocks.Remove(block);
-                ScoreManager.Score++;
+                block.Draw(gameTime);
             }
-            blocksToRemove.Clear();
 
-            base.Update(gameTime);
+            base.Draw(gameTime);
         }
     }
 }

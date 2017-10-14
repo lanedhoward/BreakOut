@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MonoGameLibrary.Sprite2;
+using MonoGameLibrary.Sprite;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -12,15 +12,20 @@ using MonoGameLibrary.Util;
 
 namespace BreakoutTest
 {
-    class Ball : DrawableSprite2
+    enum BallState {  OnPaddleStart, Playing }
+
+    class Ball : DrawableSprite
     {
         public bool IsOnPaddle;
+        BallState State;
+
         GameConsole console;
 
         public Ball(Game game)
             : base(game)
         {
             this.IsOnPaddle = true;     //When game is started ball is on paddle
+            this.State = BallState.OnPaddleStart;
 
             console = (GameConsole)this.Game.Services.GetService(typeof(IGameConsole));
             if (console == null) //ohh no no console

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MonoGameLibrary.Sprite2;
+using MonoGameLibrary.Sprite;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -11,13 +11,16 @@ using MonoGameLibrary.Util;
 
 namespace BreakoutTest
 {
-    class Paddle : DrawableSprite2
+    class Paddle : DrawableSprite
     {
+        //Service Dependencies
         GameConsole console;
+
+        //Depandencies
         PaddleController controller;
 
-        Ball ball;      //Need refernce to ball for collision
-        Rectangle top;  //Regatngle for paddle collision
+        Ball ball;      //Need reference to ball for collision
+        Rectangle collisionRectangle;  //Rectangle for paddle collision
 
         public Paddle(Game game, Ball b)
             : base(game)
@@ -48,7 +51,7 @@ namespace BreakoutTest
             this.Direction = controller.Direction;
 
             //Collision Rect
-            top = new Rectangle((int)this.Location.X, (int)this.Location.Y, this.spriteTexture.Width, 1);
+            collisionRectangle = new Rectangle((int)this.Location.X, (int)this.Location.Y, this.spriteTexture.Width, 1);
 
             if (ball.IsOnPaddle)
             {
@@ -61,7 +64,7 @@ namespace BreakoutTest
             {
                 //Ball Collsion
                 //Very simple collision with ball only uses rectangles
-                if (top.Intersects(ball.LocationRect))
+                if (collisionRectangle.Intersects(ball.LocationRect))
                 {
                     //TODO Change angle based on location of collision or direction of paddle
                     ball.Direction.Y *= -1;
