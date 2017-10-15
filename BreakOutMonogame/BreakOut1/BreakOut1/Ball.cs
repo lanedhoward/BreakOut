@@ -1,22 +1,20 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using MonoGameLibrary.Sprite;
+using MonoGameLibrary.Util;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MonoGameLibrary.Sprite;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using MonoGameLibrary.Util;
 
-
-namespace BreakoutTest
+namespace BreakOut1
 {
-    enum BallState {  OnPaddleStart, Playing }
+    enum BallState { OnPaddleStart, Playing }
 
     class Ball : DrawableSprite
     {
-        
+
         public BallState State { get; private set; }
 
         GameConsole console;
@@ -45,8 +43,8 @@ namespace BreakoutTest
         public void LaunchBall(GameTime gameTime)
         {
             this.Speed = 190;
-            this.Direction = new Vector2(1, 1);
-            this.State =  BallState.Playing;
+            this.Direction = new Vector2(1, -1);
+            this.State = BallState.Playing;
             this.console.GameConsoleWrite("Ball Launched " + gameTime.TotalGameTime.ToString());
         }
 
@@ -60,13 +58,13 @@ namespace BreakoutTest
         private void resetBall(GameTime gameTime)
         {
             this.Speed = 0;
-            this.State =  BallState.OnPaddleStart;
+            this.State = BallState.OnPaddleStart;
             this.console.GameConsoleWrite("Ball Reset " + gameTime.TotalGameTime.ToString());
         }
 
         public override void Update(GameTime gameTime)
         {
-            switch(this.State)
+            switch (this.State)
             {
                 case BallState.OnPaddleStart:
                     break;
@@ -75,7 +73,7 @@ namespace BreakoutTest
                     UpdateBall(gameTime);
                     break;
             }
-            
+
             base.Update(gameTime);
         }
 
@@ -94,7 +92,9 @@ namespace BreakoutTest
             //bottom Miss
             if (this.Location.Y + this.spriteTexture.Height > this.Game.GraphicsDevice.Viewport.Height)
             {
-                this.resetBall(gameTime);
+                //Should be miss
+                this.Direction.Y *= -1;
+                console.GameConsoleWrite("Should lose life here!!!");
             }
 
             //Top

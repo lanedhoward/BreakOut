@@ -1,56 +1,36 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using MonoGameLibrary.Util;
 
-namespace BreakoutTest
+namespace BreakOut1
 {
     /// <summary>
-    /// This is the main type for your game
+    /// This is the main type for your game.
     /// </summary>
     public class Game1 : Game
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-
-        //Services
-        InputHandler input;
-        GameConsole console;
-
-        //Components
-        BlockManager bm;
-        Paddle paddle;
+        Block b;
         Ball ball;
 
-        ScoreManager score;
+        Paddle paddle;
 
         public Game1()
-            : base()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
 
-            //Services
-            input = new InputHandler(this);
-            console = new GameConsole(this);
-            this.Components.Add(console);
-#if RELEASE
-            console.ToggleConsole(); //close the console
-#endif
-            this.Components.Add(input);
+            b = new Block(this);
+            this.Components.Add(b);
 
-            score = new ScoreManager(this);
-            this.Components.Add(score);
-
-            //GameComponents
-            ball = new Ball(this); //Ball first paddle and block manager depend on ball
+            ball = new Ball(this);
             this.Components.Add(ball);
+
             paddle = new Paddle(this, ball);
             this.Components.Add(paddle);
             
-            bm = new BlockManager(this, ball);
-            this.Components.Add(bm);
         }
 
         /// <summary>
@@ -74,13 +54,14 @@ namespace BreakoutTest
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+
+            // TODO: use this.Content to load your game content here
             
-            base.LoadContent();
         }
 
         /// <summary>
         /// UnloadContent will be called once per game and is the place to unload
-        /// all content.
+        /// game-specific content.
         /// </summary>
         protected override void UnloadContent()
         {
@@ -96,6 +77,8 @@ namespace BreakoutTest
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
+
+            // TODO: Add your update logic here
             
             base.Update(gameTime);
         }
@@ -107,7 +90,9 @@ namespace BreakoutTest
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-            
+
+            // TODO: Add your drawing code here
+
             base.Draw(gameTime);
         }
     }

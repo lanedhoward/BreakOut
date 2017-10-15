@@ -1,15 +1,14 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using MonoGameLibrary.Sprite;
+using MonoGameLibrary.Util;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MonoGameLibrary.Sprite;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using MonoGameLibrary.Util;
 
-namespace BreakoutTest
+namespace BreakOut1
 {
     class Paddle : DrawableSprite
     {
@@ -19,7 +18,7 @@ namespace BreakoutTest
         //Dependencies
         PaddleController controller;
         Ball ball;      //Need reference to ball for collision
-        
+
         public Paddle(Game game, Ball b)
             : base(game)
         {
@@ -83,57 +82,15 @@ namespace BreakoutTest
         {
             ball.Speed = 0;
             ball.Direction = Vector2.Zero;
-            ball.Location = new Vector2(this.Location.X + (this.LocationRect.Width/2 - ball.SpriteTexture.Width/2), this.Location.Y - ball.SpriteTexture.Height);
+            ball.Location = new Vector2(this.Location.X + (this.LocationRect.Width / 2 - ball.SpriteTexture.Width / 2), this.Location.Y - ball.SpriteTexture.Height);
         }
 
         private void UpdateCheckBallCollision()
         {
             //Ball Collsion
-            //Very simple collision with ball only uses rectangles
-            if (collisionRectangle.Intersects(ball.LocationRect))
-            {
-                //TODO Change angle based on location of collision or direction of paddle
-                ball.Direction.Y *= -1;
-                UpdateBallCollisionBasedOnPaddleImpactLocation();
-                UpdateBallCollisionRandomFuness();
-                console.GameConsoleWrite("Paddle collision ballLoc:" + ball.Location + " paddleLoc:" + this.Location.ToString());
-            }
+            
         }
 
-        private void UpdateBallCollisionRandomFuness()
-        {
-            //
-        }
-
-        private void UpdateBallCollisionBasedOnPaddleImpactLocation()
-        {
-            //Change angle based on paddle movement
-            if (this.Direction.X > 0)
-            {
-                ball.Direction.X += .5f;
-            }
-            if (this.Direction.X < 0)
-            {
-                ball.Direction.X -= .5f;
-            }
-            //Change anlge based on side of paddle
-            //First Third
-
-            if ((ball.Location.X > this.Location.X) && (ball.Location.X < this.Location.X + this.spriteTexture.Width / 3))
-            {
-                console.GameConsoleWrite("1st Third");
-                ball.Direction.X += .1f;
-            }
-            if ((ball.Location.X > this.Location.X + (this.spriteTexture.Width / 3)) && (ball.Location.X < this.Location.X + (this.spriteTexture.Width / 3) * 2))
-            {
-                console.GameConsoleWrite("2nd third");
-            }
-            if ((ball.Location.X > (this.Location.X + (this.spriteTexture.Width / 3) * 2)) && (ball.Location.X < this.Location.X + (this.spriteTexture.Width)))
-            {
-                console.GameConsoleWrite("3rd third");
-                ball.Direction.X -= .1f;
-            }
-        }
 
         private void KeepPaddleOnScreen()
         {

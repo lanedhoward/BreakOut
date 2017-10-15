@@ -14,7 +14,7 @@ namespace BreakoutTest
 
         public List<Block> Blocks { get; private set; } //List of Blocks the are managed by Block Manager
 
-        
+        //Dependancy on Ball
         Ball ball;
 
         List<Block> blocksToRemove; //list of block to remove probably because they were hit
@@ -110,12 +110,10 @@ namespace BreakoutTest
 
         public override void Draw(GameTime gameTime)
         {
-            
             foreach (var block in this.Blocks)
             {
                 block.Draw(gameTime);
             }
-
             base.Draw(gameTime);
         }
     }
