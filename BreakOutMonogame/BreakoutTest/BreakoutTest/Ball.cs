@@ -45,7 +45,7 @@ namespace BreakoutTest
         public void LaunchBall(GameTime gameTime)
         {
             this.Speed = 190;
-            this.Direction = new Vector2(1, 1);
+            this.Direction = new Vector2(1, -1);
             this.State =  BallState.Playing;
             this.console.GameConsoleWrite("Ball Launched " + gameTime.TotalGameTime.ToString());
         }
@@ -103,5 +103,11 @@ namespace BreakoutTest
                 this.Direction.Y *= -1;
             }
         }
+
+        public void Reflect(Block block)
+        {
+            this.Direction.Y *= -1; //TODO check for side collision with block
+        }
+
     }
 }

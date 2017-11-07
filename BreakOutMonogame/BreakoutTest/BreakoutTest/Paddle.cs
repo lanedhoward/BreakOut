@@ -33,6 +33,8 @@ namespace BreakoutTest
                 console = new GameConsole(this.Game);
                 this.Game.Components.Add(console);  //add a new game console to Game
             }
+
+            r = new Random();
         }
 
         protected override void LoadContent()
@@ -100,9 +102,20 @@ namespace BreakoutTest
             }
         }
 
+        Random r;
+
         private void UpdateBallCollisionRandomFuness()
         {
-            //
+            /// 
+            /// Adds a bit of entropy to bounce nothing should be perfect
+            /// 
+            /// 
+            ball.Direction.Y = GetReflectEntropy();
+        }
+
+        private float GetReflectEntropy()
+        {
+            return -1 + ((r.Next(0, 3) - 1) * 0.1f); //return -.9, -1 or -1.1
         }
 
         private void UpdateBallCollisionBasedOnPaddleImpactLocation()
@@ -110,11 +123,11 @@ namespace BreakoutTest
             //Change angle based on paddle movement
             if (this.Direction.X > 0)
             {
-                ball.Direction.X += .5f;
+                ball.Direction.X += .1f;
             }
             if (this.Direction.X < 0)
             {
-                ball.Direction.X -= .5f;
+                ball.Direction.X -= .1f;
             }
             //Change anlge based on side of paddle
             //First Third

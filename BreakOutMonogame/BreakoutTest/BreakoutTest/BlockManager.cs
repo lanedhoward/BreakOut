@@ -18,8 +18,12 @@ namespace BreakoutTest
         Ball ball;
 
         List<Block> blocksToRemove; //list of block to remove probably because they were hit
-        
-        
+
+        /// <summary>
+        /// BlockManager hold a list of blocks and handles updating, drawing a block collision
+        /// </summary>
+        /// <param name="game">Reference to Game</param>
+        /// <param name="ball">Refernce to Ball for collision</param>
         public BlockManager(Game game, Ball b)
             : base(game)
         {
@@ -31,22 +35,28 @@ namespace BreakoutTest
 
         public override void Initialize()
         {
-            LoadBlocks();
+            LoadLevel();
             base.Initialize();
         }
 
+        /// <summary>
+        /// Replacable Method to Load a Level by filling the Blocks List with Blocks
+        /// </summary>
+        protected virtual void LoadLevel()
+        {
+            CreateBlockArrayByWidthAndHeight(24, 2, 1);
+        }
 
-        
-        public virtual void LoadBlocks()
+        /// <summary>
+        /// Simple Level lays out multiple levels of blocks
+        /// </summary>
+        /// <param name="width">Number of blocks wide</param>
+        /// <param name="height">Number of blocks high</param>
+        /// <param name="margin">space between blocks</param>
+        private void CreateBlockArrayByWidthAndHeight(int width, int height, int margin)
         {
             Block b;
-            int width, height; //widh and height of block grid measured in block
-            int margin; //Margin between blocks
-            width = 24; 
-            height = 2;
-            margin = 1;
-
-            //Create grid of blocks
+            //Create Block Array based on with and hieght
             for (int w = 0; w < width; w++)
             {
                 for (int h = 0; h < height; h++)
@@ -57,8 +67,9 @@ namespace BreakoutTest
                     Blocks.Add(b);
                 }
             }
-
         }
+
+        
 
         bool reflected; //the ball should only reflect once even if it hits two bricks
         public override void Update(GameTime gameTime)
@@ -88,25 +99,27 @@ namespace BreakoutTest
         {
             foreach (Block b in Blocks)
             {
-                if (b.Enabled)
+                if (b.Enabled) //Only chack active blocks
                 {
-                    b.Update(gameTime);
+                    b.Update(gameTime); //Update Block
                     //Ball Collision
-                    if (b.Intersects(ball)) //rectagle collision
+                    if (b.Intersects(ball)) //chek rectagle collision between ball and current block 
                     {
                         //hit
-                        b.Enabled = false;  //Don't update block anymore
-                        b.Visible = false;  //Don't draw clock anymore
+                        b.HitByBall(ball);
+                        
                         blocksToRemove.Add(b);  //Ball is hit add it to remove list
                         if (!reflected) //only reflect once
                         {
-                            ball.Direction.Y *= -1;
+                            ball.Reflect(b);
                             this.reflected = true;
                         }
                     }
                 }
             }
         }
+
+
 
         public override void Draw(GameTime gameTime)
         {

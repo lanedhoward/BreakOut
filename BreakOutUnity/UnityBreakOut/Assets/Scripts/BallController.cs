@@ -3,19 +3,16 @@ using System.Collections;
 
 public class BallController : MonoBehaviour
 {
-
-
     public Vector2 Direction;
     public float Speed;
-
 
     private Rigidbody2D rb2D;
     private SpriteRenderer spriteRenderer;
 
     void Awake()
     {
-        Util.GetComponentIfNull<SpriteRenderer>(this, ref spriteRenderer);
-        rb2D = GetComponent<Rigidbody2D>();
+        Util.GetComponentIfNull<SpriteRenderer>(this, ref spriteRenderer); 
+        rb2D = GetComponent<Rigidbody2D>();//Check for null?
     }
 
     // Use this for initialization
@@ -28,17 +25,15 @@ public class BallController : MonoBehaviour
     void Update()
     {
 
-        
-
     }
 
+    /// <summary>
+    /// FixedUpdate uses physics
+    /// </summary>
     void FixedUpdate()
     {
-        
-
         if (rb2D != null)
         {
-
             //Keep on screen
             this.rb2D.position = Util.BounceOffWalls(this.transform.position,
                 spriteRenderer.bounds.size.x - 1,
