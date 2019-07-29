@@ -26,8 +26,9 @@ namespace BreakoutTest
         {
             this.State = BallState.OnPaddleStart;
 
+            //Lazy load GameConsole
             console = (GameConsole)this.Game.Services.GetService(typeof(IGameConsole));
-            if (console == null) //ohh no no console
+            if (console == null) //ohh no no console let's add a new one
             {
                 console = new GameConsole(this.Game);
                 this.Game.Components.Add(console);  //add a new game console to Game
@@ -39,14 +40,14 @@ namespace BreakoutTest
 
         public void SetInitialLocation()
         {
-            this.Location = new Vector2(200, 300);
+            this.Location = new Vector2(200, 300); //Hard coded position TODO fix this
         }
 
         public void LaunchBall(GameTime gameTime)
         {
-            this.Speed = 190;
-            this.Direction = new Vector2(1, -1);
-            this.State =  BallState.Playing;
+            this.Speed = 190; //hard coded speed TODO fix this
+            this.Direction = new Vector2(1, -1); //hard coded launch direction TODO fix this
+            this.State = BallState.Playing;
             this.console.GameConsoleWrite("Ball Launched " + gameTime.TotalGameTime.ToString());
         }
 

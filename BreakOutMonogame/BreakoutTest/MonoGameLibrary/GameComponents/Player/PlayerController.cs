@@ -25,7 +25,7 @@ namespace MonoGameLibrary.GameComponents.Player
         GamePadState gamePad1State;
 
         //Player controller depends on MonogaemLibrary.Util.InputHandler
-        InputHandler input;
+        public InputHandler input;
 
         //Checks to see if there is any movement
         public bool hasInputForMoverment
@@ -52,12 +52,16 @@ namespace MonoGameLibrary.GameComponents.Player
             }
         }
 
+        /// <summary>
+        /// Update the current frame
+        /// </summary>
+        /// <param name="gameTime"></param>
         public override void Update(GameTime gameTime)
         {
 
-            HandleGamePad();
+            HandleGamePad();    //Get input from gampads
 
-            HandleKeyboard();
+            HandleKeyboard();   //Get input from keyboard
 
             #region SumAllInput
             this.Direction = this.KeyDir + this.DPadDir + this.StickDir;
@@ -71,8 +75,7 @@ namespace MonoGameLibrary.GameComponents.Player
                         this.Direction.Y * -1);
 
                 //This converts angle back to degree and uses art facing left as 0 degreees
-                //Art facing 
-                //left = rotationAngle - (float)(Math.PI / 2)
+                //Art that start sfacing left = rotationAngle - (float)(Math.PI / 2)
                 //right = 
                 //TODO add rotations in radians
                 this.Rotate = (float)MathHelper.ToDegrees(rotationAngle - (float)(Math.PI / 2));

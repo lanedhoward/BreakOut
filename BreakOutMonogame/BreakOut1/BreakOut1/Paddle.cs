@@ -26,8 +26,9 @@ namespace BreakOut1
             this.ball = b;
             controller = new PaddleController(game, ball);
 
+            //Lazy load GameConsole
             console = (GameConsole)this.Game.Services.GetService(typeof(IGameConsole));
-            if (console == null) //ohh no no console
+            if (console == null) //ohh no no console make a new one and add it to the game
             {
                 console = new GameConsole(this.Game);
                 this.Game.Components.Add(console);  //add a new game console to Game
@@ -37,7 +38,7 @@ namespace BreakOut1
         protected override void LoadContent()
         {
             this.spriteTexture = this.Game.Content.Load<Texture2D>("paddleSmall");
-#if DEBUG
+#if DEBUG   //Show markers if we are in debug mode
             this.ShowMarkers = true;
 #endif
             SetInitialLocation();
@@ -46,18 +47,17 @@ namespace BreakOut1
 
         public void SetInitialLocation()
         {
-            this.Location = new Vector2(300, 450);
-
+            this.Location = new Vector2(300, 450);  //Shouldn't hard code inital position TODO set to be realtive to windows size
         }
 
-        Rectangle collisionRectangle;  //Rectangle for paddle collision uses just the top of the paddle
+        Rectangle collisionRectangle;  //Rectangle for paddle collision uses just the top of the paddle instead of the whole sprite
 
         public override void Update(GameTime gameTime)
         {
             //Update Collision Rect
             collisionRectangle = new Rectangle((int)this.Location.X, (int)this.Location.Y, this.spriteTexture.Width, 1);
 
-            //Deal with ball
+            //Deal with ball state
             switch (ball.State)
             {
                 case BallState.OnPaddleStart:
@@ -71,6 +71,7 @@ namespace BreakOut1
 
             //Movement from controller
             controller.HandleInput(gameTime);
+
             this.Direction = controller.Direction;
             this.Location += this.Direction * (this.Speed * gameTime.ElapsedGameTime.Milliseconds / 1000);
 
@@ -88,9 +89,7 @@ namespace BreakOut1
         private void UpdateCheckBallCollision()
         {
             //Ball Collsion
-            
         }
-
 
         private void KeepPaddleOnScreen()
         {

@@ -41,7 +41,7 @@ namespace MonoGameLibrary.Util
             CurrentScore = 0;
             sb = new SpriteBatch(Game.GraphicsDevice);
             font = Game.Content.Load<SpriteFont>("Arial");
-            ScoreLoc = new Vector2(100, 100);
+            ScoreLoc = new Vector2(550, 5);
             base.LoadContent();
         }
 

@@ -11,7 +11,6 @@ namespace BreakoutTest
 {
     class BlockManager : DrawableGameComponent
     {
-
         public List<Block> Blocks { get; private set; } //List of Blocks the are managed by Block Manager
 
         //Dependancy on Ball
@@ -68,9 +67,7 @@ namespace BreakoutTest
                 }
             }
         }
-
         
-
         bool reflected; //the ball should only reflect once even if it hits two bricks
         public override void Update(GameTime gameTime)
         {
@@ -119,13 +116,16 @@ namespace BreakoutTest
             }
         }
 
-
-
+        /// <summary>
+        /// Block Manager Draws blocks they don't draw themselves
+        /// </summary>
+        /// <param name="gameTime"></param>
         public override void Draw(GameTime gameTime)
         {
             foreach (var block in this.Blocks)
             {
-                block.Draw(gameTime);
+                if(block.Visible)   //respect block visible property
+                    block.Draw(gameTime);
             }
             base.Draw(gameTime);
         }

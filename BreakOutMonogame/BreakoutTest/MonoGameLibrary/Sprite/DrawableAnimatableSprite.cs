@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
-
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Content;
@@ -133,7 +132,7 @@ namespace MonoGameLibrary.Sprite
         /// </summary>
         /// <param name="OtherSprite"></param>
         /// <returns></returns>
-        public override bool PerPixelCollision2(Sprite OtherSprite)
+        public override bool PerPixelCollision(Sprite OtherSprite)
         {
             return IntersectPixels(this.spriteTransform, 
                 this.currentTextureRect.Width,
