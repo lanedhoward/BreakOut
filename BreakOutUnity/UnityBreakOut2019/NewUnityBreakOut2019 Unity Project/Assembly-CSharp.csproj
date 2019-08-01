@@ -64,11 +64,13 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\BallCollision.cs" />
     <Compile Include="Assets\Scripts\BallController.cs" />
+    <Compile Include="Assets\Scripts\Block.cs" />
     <Compile Include="Assets\Scripts\BlockManager.cs" />
     <Compile Include="Assets\Scripts\GameConsole.cs" />
     <Compile Include="Assets\Scripts\Paddle.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
     <Compile Include="Assets\Scripts\ScoreManager.cs" />
+    <Compile Include="Assets\Scripts\UnityBlock.cs" />
     <Compile Include="Assets\Scripts\Util.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>C:/Users/JeffMeyers/Documents/GitHub/BreakOut/BreakOutUnity/UnityBreakOut2019/NewUnityBreakOut2019 Unity Project/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>

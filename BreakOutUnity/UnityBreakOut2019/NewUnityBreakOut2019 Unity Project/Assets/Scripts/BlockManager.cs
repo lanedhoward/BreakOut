@@ -30,7 +30,7 @@ public class BlockManager : MonoBehaviour
             for (float x = startX; x < gridX; x = x + padding)
             {
                 Vector3 pos = new Vector3(x + padding, y + padding, 0);
-                Bricks.Add((GameObject)Instantiate(prefab, pos, Quaternion.identity));
+                Bricks.Add((GameObject)Instantiate(prefab, pos, Quaternion.identity, this.transform));
             }
         }
     }

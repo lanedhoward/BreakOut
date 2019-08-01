@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+using System;
 
 public class BallCollision : MonoBehaviour {
 
@@ -70,7 +70,7 @@ public class BallCollision : MonoBehaviour {
                 {
                     Debug.Log("RIGHT");
                     this.controller.RelfectX();
-                    Destroy(coll.gameObject);
+                    Hit(coll.gameObject);
                     reflected = true;
                 }
 
@@ -81,7 +81,7 @@ public class BallCollision : MonoBehaviour {
                 {
                     Debug.Log("LEFT");
                     this.controller.RelfectX();
-                    Destroy(coll.gameObject);
+                    Hit(coll.gameObject);
                     reflected = true;
 
                 }
@@ -96,7 +96,7 @@ public class BallCollision : MonoBehaviour {
                 {
                     Debug.Log("TOP");
                     this.controller.RelfectY();
-                    Destroy(coll.gameObject);
+                    Hit(coll.gameObject);
                     reflected = true;
 
                 }
@@ -108,11 +108,20 @@ public class BallCollision : MonoBehaviour {
                 {
                     Debug.Log("BOTTOM");
                     this.controller.RelfectY();
-                    Destroy(coll.gameObject);
+                    Hit(coll.gameObject);
                     reflected = true;
                 }
             }
 
+        }
+    }
+
+    private void Hit(GameObject gameObject)
+    {
+        UnityBlock block = gameObject.GetComponent<UnityBlock>();
+        if(block != null)
+        {
+            block.Hit(this);
         }
     }
 }
