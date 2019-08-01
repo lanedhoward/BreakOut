@@ -40,6 +40,7 @@ public class UnityBlock : MonoBehaviour, IHitMessageTarget
         switch(block.BlockState)
         {
             case BlockState.Normal:
+                this.gameObject.SetActive(true);
                 this.spriteRenderer.sprite = NormalTexture;
                 break;
             case BlockState.Hit:
@@ -47,6 +48,8 @@ public class UnityBlock : MonoBehaviour, IHitMessageTarget
                 break;
             case BlockState.Broken:
                 this.spriteRenderer.sprite = NormalTexture;
+                //this.enabled = false;
+                this.gameObject.SetActive(false); //don't show block
                 break;
         }
     }
@@ -65,7 +68,9 @@ public class UnityBlock : MonoBehaviour, IHitMessageTarget
     // Update is called once per frame
     void Update()
     {
+        block.UpdateBlockState();
         UnityBlockUpdate();
+        
     }
 
     protected virtual void UnityBlockUpdate()
@@ -75,7 +80,9 @@ public class UnityBlock : MonoBehaviour, IHitMessageTarget
 
     public void Hit(BallCollision ballCollision)
     {
-        this.block.BlockState = BlockState.Hit;
+        this.block.Hit();
+        
+
     }
 
     public void HitMessage()

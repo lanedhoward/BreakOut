@@ -27,13 +27,24 @@ namespace Assets.Scripts
         public virtual void Hit()
         {
             this.hitCount++;
-            this.updateBlockState();
+            this.UpdateBlockState();
         }
 
-        protected virtual void updateBlockState()
+        public virtual void UpdateBlockState()
         {
-            if(this.hitCount > 0)
-                this.BlockState = BlockState.Broken; //Maybe there should be more block states?
+            switch(this.hitCount)
+            {
+                case 0:
+                    this.BlockState = BlockState.Normal;
+                    break;
+                case 1:
+                    this.BlockState = BlockState.Hit;
+                    break;
+                case 2:
+                    this.BlockState = BlockState.Broken;
+                    break;
+            }
+            
         }
     }
 }

@@ -3999,6 +3999,10 @@ PrefabInstance:
       propertyPath: m_Constraints
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 11429798, guid: 711d3b0b2e2035e4ebdac1e5e7655687, type: 3}
+      propertyPath: Direction.x
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5802918, guid: 711d3b0b2e2035e4ebdac1e5e7655687, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 711d3b0b2e2035e4ebdac1e5e7655687, type: 3}
