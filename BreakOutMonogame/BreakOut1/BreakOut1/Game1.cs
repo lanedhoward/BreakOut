@@ -12,7 +12,7 @@ namespace BreakOut1
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        Block b;
+        MonogameBlock b;
         Ball ball;
 
         Paddle paddle;
@@ -22,7 +22,8 @@ namespace BreakOut1
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
 
-            b = new Block(this);
+            b = new MonogameBlock(this);
+            b.Location = new Vector2(400, 300);
             this.Components.Add(b);
 
             ball = new Ball(this);
