@@ -11,12 +11,12 @@ namespace BreakoutTest
 {
     class BlockManager : DrawableGameComponent
     {
-        public List<Block> Blocks { get; private set; } //List of Blocks the are managed by Block Manager
+        public List<MonogameBlock> Blocks { get; private set; } //List of Blocks the are managed by Block Manager
 
         //Dependancy on Ball
         Ball ball;
 
-        List<Block> blocksToRemove; //list of block to remove probably because they were hit
+        List<MonogameBlock> blocksToRemove; //list of block to remove probably because they were hit
 
         /// <summary>
         /// BlockManager hold a list of blocks and handles updating, drawing a block collision
@@ -26,8 +26,8 @@ namespace BreakoutTest
         public BlockManager(Game game, Ball b)
             : base(game)
         {
-            this.Blocks = new List<Block>();
-            this.blocksToRemove = new List<Block>();
+            this.Blocks = new List<MonogameBlock>();
+            this.blocksToRemove = new List<MonogameBlock>();
             
             this.ball = b;
         }
@@ -54,13 +54,13 @@ namespace BreakoutTest
         /// <param name="margin">space between blocks</param>
         private void CreateBlockArrayByWidthAndHeight(int width, int height, int margin)
         {
-            Block b;
+            MonogameBlock b;
             //Create Block Array based on with and hieght
             for (int w = 0; w < width; w++)
             {
                 for (int h = 0; h < height; h++)
                 {
-                    b = new Block(this.Game);
+                    b = new MonogameBlock(this.Game);
                     b.Initialize();
                     b.Location = new Vector2(5 + (w * b.SpriteTexture.Width + (w * margin)), 50 + (h * b.SpriteTexture.Height + (h * margin)));
                     Blocks.Add(b);
@@ -73,9 +73,19 @@ namespace BreakoutTest
         {
             this.reflected = false; //only reflect once per update
             UpdateCheckBlocksForCollision(gameTime);
+            UpdateBlocks(gameTime);
             UpdateRemoveDisabledBlocks();
+            
 
             base.Update(gameTime);
+        }
+
+        private void UpdateBlocks(GameTime gameTime)
+        {
+            foreach (var block in Blocks)
+            {
+                block.Update(gameTime);
+            }
         }
 
         /// <summary>
@@ -94,7 +104,7 @@ namespace BreakoutTest
 
         private void UpdateCheckBlocksForCollision(GameTime gameTime)
         {
-            foreach (Block b in Blocks)
+            foreach (MonogameBlock b in Blocks)
             {
                 if (b.Enabled) //Only chack active blocks
                 {
@@ -104,8 +114,8 @@ namespace BreakoutTest
                     {
                         //hit
                         b.HitByBall(ball);
-                        
-                        blocksToRemove.Add(b);  //Ball is hit add it to remove list
+                        if(b.BlockState == BlockState.Broken)
+                            blocksToRemove.Add(b);  //Ball is hit add it to remove list
                         if (!reflected) //only reflect once
                         {
                             ball.Reflect(b);

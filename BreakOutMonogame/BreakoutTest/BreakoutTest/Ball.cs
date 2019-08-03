@@ -12,9 +12,9 @@ using MonoGameLibrary.Util;
 
 namespace BreakoutTest
 {
-    enum BallState {  OnPaddleStart, Playing }
+    public enum BallState {  OnPaddleStart, Playing }
 
-    class Ball : DrawableSprite
+    public class Ball : DrawableSprite
     {
         
         public BallState State { get; private set; }
@@ -105,7 +105,7 @@ namespace BreakoutTest
             }
         }
 
-        public void Reflect(Block block)
+        public void Reflect(MonogameBlock block)
         {
             this.Direction.Y *= -1; //TODO check for side collision with block
         }

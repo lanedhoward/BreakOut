@@ -1,4 +1,4 @@
-﻿using System;
+﻿ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,44 +10,49 @@ using Microsoft.Xna.Framework.Input;
 
 namespace BreakoutTest
 {
-    enum BlockState { Normal, Broken };
+    public enum BlockState { Normal, Hit, Broken }
 
-    class Block : DrawableSprite
+    public class Block
     {
-        protected string blockTextureName;
-        protected BlockState _state;            //Private instance datamenber for block
-        public BlockState State
+        protected int hitCount; //Future use maybe should change state?
+        protected uint blockID;
+
+        protected static uint blockCount;
+
+        public BlockState BlockState { get; set; }
+
+        public Block()
         {
-            get { return _state; }
-            protected set
+            this.BlockState = BlockState.Normal;
+            blockCount++;
+            this.blockID = blockCount;
+        }
+        public virtual void Hit()
+        {
+            this.hitCount++;
+            this.UpdateBlockState();
+        }
+
+        public virtual void UpdateBlockState()
+        {
+            switch (this.hitCount)
             {
-                if (this._state != value)       //Change state if it is different than previous state                
-                {
-                    this._state = value;
-                }
+                case 0:
+                    this.BlockState = BlockState.Normal;
+                    break;
+                case 1:
+                    this.BlockState = BlockState.Hit;
+                    break;
+                case 2:
+                    this.BlockState = BlockState.Broken;
+                    break;
+                default:
+                    this.BlockState = BlockState.Broken;
+                    break;
             }
-        }
 
-        public Block(Game game)
-            : base(game)
-        {
-            blockTextureName = "block_blue";
-        }
-        protected override void LoadContent()
-        {
-            this.spriteTexture = this.Game.Content.Load<Texture2D> (blockTextureName);
-            base.LoadContent();
-        }
-
-        /// <summary>
-        /// Checks if ball is hit by block
-        /// </summary>
-        /// <param name="ball"></param>
-        internal void HitByBall(Ball ball)
-        {
-            this.Enabled = false;
-            this.Visible = false;
-            this.State = BlockState.Broken;
         }
     }
+
+    
 }

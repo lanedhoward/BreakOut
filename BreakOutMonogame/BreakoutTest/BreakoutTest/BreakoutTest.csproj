@@ -46,6 +46,7 @@
     <Compile Include="Block.cs" />
     <Compile Include="BlockManager.cs" />
     <Compile Include="Game1.cs" />
+    <Compile Include="MonogameBlock.cs" />
     <Compile Include="Paddle.cs" />
     <Compile Include="PaddleController.cs" />
     <Compile Include="Program.cs" />
