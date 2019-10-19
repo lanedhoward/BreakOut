@@ -1,2 +1,2 @@
 # BreakOut
-Game Programming Project in Unity and Monogama
+Game Programming Project in Unity and Monogame
