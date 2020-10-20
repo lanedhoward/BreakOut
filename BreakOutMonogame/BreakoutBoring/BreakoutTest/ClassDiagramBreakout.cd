@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ClassDiagram MajorVersion="1" MinorVersion="1">
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
   <Class Name="BreakoutTest.Ball">
-    <Position X="0.75" Y="2.5" Width="1.75" />
+    <Position X="0.75" Y="2.5" Width="3.25" />
     <TypeIdentifier>
       <HashCode>gAQAAAAIgAAAAAAAAAAAhAABAAAAAAAAAAAABAAAAAQ=</HashCode>
       <FileName>Ball.cs</FileName>
@@ -43,28 +43,42 @@
     </TypeIdentifier>
   </Class>
   <Class Name="BreakoutTest.MonogameBlock">
-    <Position X="3.75" Y="7.75" Width="2" />
+    <Position X="3.75" Y="7.75" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AAQAEACAYAAAAAAAAAAAARAAAAAUAAAAAAAAAAAAFAQ=</HashCode>
       <FileName>MonogameBlock.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BreakoutTest.ScoreManager">
-    <Position X="2" Y="19" Width="3.25" />
+    <Position X="1" Y="18" Width="3.25" />
     <TypeIdentifier>
       <HashCode>AAIAAgAAAAAAgigCAAAEAAAAAAAAAAADAAAAAgAAAAQ=</HashCode>
       <FileName>ScoreManager.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="BreakoutTest.Paddle">
+    <Position X="1.25" Y="24.75" Width="4.25" />
+    <TypeIdentifier>
+      <HashCode>AAQAgAAAgACAAAEIAAAAFAAABAAAAAIAAABBAAAAAAQ=</HashCode>
+      <FileName>Paddle.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BreakoutTest.PaddleController">
+    <Position X="5.75" Y="24.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAgACAAAAAAAAAACAAAAAAAAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>PaddleController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
   <Enum Name="BreakoutTest.BallState">
-    <Position X="2.75" Y="2.5" Width="1.5" />
+    <Position X="4.5" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>BAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Ball.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="BreakoutTest.BlockState">
-    <Position X="6" Y="9" Width="1.5" />
+    <Position X="6.5" Y="9" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAIABAAAAAAIAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Block.cs</FileName>
