@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace BreakoutTest
 {
-    class BlockManager : DrawableGameComponent
+    public class BlockManager : DrawableGameComponent
     {
         public List<MonogameBlock> Blocks { get; private set; } //List of Blocks the are managed by Block Manager
 
@@ -30,6 +30,8 @@ namespace BreakoutTest
             this.blocksToRemove = new List<MonogameBlock>();
             
             this.ball = b;
+
+            ScoreManager.Level = -1;
         }
 
         public override void Initialize()
@@ -52,7 +54,7 @@ namespace BreakoutTest
         /// <param name="width">Number of blocks wide</param>
         /// <param name="height">Number of blocks high</param>
         /// <param name="margin">space between blocks</param>
-        private void CreateBlockArrayByWidthAndHeight(int width, int height, int margin)
+        protected void CreateBlockArrayByWidthAndHeight(int width, int height, int margin)
         {
             MonogameBlock b;
             //Create Block Array based on with and hieght

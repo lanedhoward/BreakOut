@@ -46,6 +46,9 @@
     <Compile Include="Block.cs" />
     <Compile Include="BlockManager.cs" />
     <Compile Include="Game1.cs" />
+    <Compile Include="Level1.cs" />
+    <Compile Include="Level2.cs" />
+    <Compile Include="Level3.cs" />
     <Compile Include="MonogameBlock.cs" />
     <Compile Include="Paddle.cs" />
     <Compile Include="PaddleController.cs" />
@@ -68,6 +71,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="ClassDiagramBreakout.cd" />
     <None Include="Content\Arial.xnb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="BreakoutTest.Ball">
+    <Position X="0.75" Y="2.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>gAQAAAAIgAAAAAAAAAAAhAABAAAAAAAAAAAABAAAAAQ=</HashCode>
+      <FileName>Ball.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BreakoutTest.Block">
+    <Position X="1" Y="7.25" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAAAAAAAAAAAIAABAAAAAAAEAAAEAAAAAAABA=</HashCode>
+      <FileName>Block.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BreakoutTest.BlockManager">
+    <Position X="1.25" Y="11.25" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAQEgAAAAAACAwEAEAAAAAAGAAAAAAAAAAAAAACABAA=</HashCode>
+      <FileName>BlockManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BreakoutTest.Level1">
+    <Position X="5.5" Y="11.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Level1.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BreakoutTest.Level2">
+    <Position X="5.5" Y="12.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Level2.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BreakoutTest.Level3">
+    <Position X="5.5" Y="14" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Level3.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="BreakoutTest.BallState">
+    <Position X="2.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Ball.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="BreakoutTest.BlockState">
+    <Position X="3.75" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAIABAAAAAAIAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Block.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
