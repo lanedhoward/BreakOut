@@ -10,7 +10,7 @@ namespace BreakoutTest
 
         public Level3(Game1 game, Ball b) : base(game, b)
         {
-
+            ScoreManager.Level = 3;
         }
 
         protected override void LoadLevel()
