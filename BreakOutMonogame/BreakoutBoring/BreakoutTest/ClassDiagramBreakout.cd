@@ -73,12 +73,12 @@
   <Enum Name="BreakoutTest.BallState">
     <Position X="4.5" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>BAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>BAAAAAAAAAAAAAAQAAAAAAAIAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Ball.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="BreakoutTest.BlockState">
-    <Position X="6.5" Y="9" Width="1.5" />
+    <Position X="3.75" Y="6.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAIABAAAAAAIAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Block.cs</FileName>
