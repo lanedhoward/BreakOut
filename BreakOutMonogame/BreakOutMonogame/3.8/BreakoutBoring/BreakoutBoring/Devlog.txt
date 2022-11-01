@@ -18,3 +18,12 @@ other notes:
 	-Made a few methods such as scoremanager.setupnewgame() and Ball.resetBall() public so the game can use it.
 		-could have made a GameManager class but it is close to the deadline so i just put logic in the Game1 class
 	-autopaddle is toggleable by pressing A
+
+Modification Description : what you changed and why its better/funner
+	-see above
+Structural Changes : what new classes did you add what classes did you modify. Why did you decide to make these changes where you did?
+	-see above
+State Changes : Did you need to refactor any state to accommodate your changes? What did you refactor and why?
+	- game now has state to account for title screens and summary screens.
+Maintainability : Did you improve the baseline of the source code to make it more sustainable or did you accrue technical debt?
+	- some minor improvements and some minor accrual of technical debt. would not be too difficult to fix the technical debt though.
