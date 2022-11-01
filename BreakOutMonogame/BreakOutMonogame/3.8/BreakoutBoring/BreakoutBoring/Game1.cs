@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using MonoGameLibrary.Sprite;
 using MonoGameLibrary.Util;
 
 namespace BreakoutBoring
@@ -8,6 +9,14 @@ namespace BreakoutBoring
     /// <summary>
     /// This is the main type for your game
     /// </summary>
+    /// 
+    public enum GameState
+    {
+        Title,
+        Playing,
+        Summary
+    }
+
     public class Game1 : Game
     {
         GraphicsDeviceManager graphics;
@@ -25,9 +34,17 @@ namespace BreakoutBoring
 
         ScoreManager score;
 
+        public GameState state;
+        SpriteFont font;
+
+        Vector2 titleLoc;
+        Vector2 summaryLoc;
+        Vector2 buttonPromptLoc;
+
         public Game1()
             : base()
         {
+            Window.Title = "LANE'S BREAKOUT <3";
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
 
@@ -51,6 +68,11 @@ namespace BreakoutBoring
             
             bm = new BlockManager(this, ball);
             this.Components.Add(bm);
+
+            state = GameState.Title;
+            titleLoc = new Vector2(300, 200);
+            summaryLoc = new Vector2(300, 200);
+            buttonPromptLoc = new Vector2(300, 300);
         }
 
         /// <summary>
@@ -63,6 +85,8 @@ namespace BreakoutBoring
         {
             // TODO: Add your initialization logic here
 
+            DisableAllSprites();
+
             base.Initialize();
         }
 
@@ -74,7 +98,8 @@ namespace BreakoutBoring
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            
+            font = Content.Load<SpriteFont>("Arial");
+
             base.LoadContent();
         }
 
@@ -97,6 +122,16 @@ namespace BreakoutBoring
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
             
+            if (input.WasKeyPressed(Keys.Space))
+            {
+                if (state == GameState.Title || state == GameState.Summary)
+                {
+                    StartGame();
+                    state = GameState.Playing;
+                }
+            }
+            
+
             base.Update(gameTime);
         }
 
@@ -106,9 +141,68 @@ namespace BreakoutBoring
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
-            
+            GraphicsDevice.Clear(Color.DarkGoldenrod);
+
+            spriteBatch.Begin();
+
+            switch (state)
+            {
+                case GameState.Title:
+                    spriteBatch.DrawString(font, "Welcome to Lane's Brick Breaker <3", titleLoc, Color.White);
+                    spriteBatch.DrawString(font, "Press Space", buttonPromptLoc, Color.White);
+                    break;
+                case GameState.Playing:
+
+                    break;
+                case GameState.Summary:
+                    spriteBatch.DrawString(font, "Game over <3 You scored " + ScoreManager.Score, summaryLoc, Color.White);
+                    spriteBatch.DrawString(font, "Press Space", buttonPromptLoc, Color.White);
+                    break;
+            }
+
+            spriteBatch.End();
+
             base.Draw(gameTime);
+        }
+
+        public void DisableAllSprites()
+        {
+            DisableDrawableGameComponent(ball);
+            DisableDrawableGameComponent(paddle);
+            DisableDrawableGameComponent(bm);
+        }
+
+        public void EnableAllSprites()
+        {
+            EnableDrawableGameComponent(ball);
+            EnableDrawableGameComponent(paddle);
+            EnableDrawableGameComponent(bm);
+        }
+
+        public void DisableDrawableGameComponent(DrawableGameComponent dgc)
+        {
+            dgc.Enabled = false;
+            dgc.Visible = false;
+        }
+        public void EnableDrawableGameComponent(DrawableGameComponent dgc)
+        {
+            dgc.Enabled = true;
+            dgc.Visible = true;
+        }
+
+        public void StartGame()
+        {
+            EnableAllSprites();
+            ScoreManager.SetupNewGame();
+            ball.resetBall();
+            bm.ResetBlocks();
+            bm.LoadLevel();
+        }
+
+        public void EndGame()
+        {
+            DisableAllSprites();
+            state = GameState.Summary;
         }
     }
 }

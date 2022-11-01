@@ -21,15 +21,25 @@ namespace BreakoutBoring
         Ball ball;      //Need reference to ball for collision
 
         bool autopaddle;  //cheat
+
+        float influence;
+        float maxInfluenceFactor;
+
+        Vector2 lastDirection;
+        float dashDistance;
         
         public Paddle(Game game, Ball b)
             : base(game)
         {
 
-            this.autopaddle = true;
-            this.Speed = 200;
+            this.autopaddle = false; //just press A while playing to toggle
+            this.Speed = 350f;
             this.ball = b;
+            this.influence = 0.2f;
+            maxInfluenceFactor = 2.0f;
             controller = new PaddleController(game, ball);
+            lastDirection = new Vector2(1,0);
+            dashDistance = 150f;
 
             //Lazy load GameConsole
             console = (GameConsole)this.Game.Services.GetService(typeof(IGameConsole));
@@ -79,9 +89,24 @@ namespace BreakoutBoring
 
             //Movement from controller
             controller.HandleInput(gameTime);
-
+            
             this.Direction = controller.Direction;
+            
+            if (Direction.X != 0)
+            {
+                lastDirection = Direction;
+            }
+
             this.Location += this.Direction * (this.Speed * gameTime.ElapsedGameTime.Milliseconds / 1000);
+
+            if (controller.dashPressed)
+            {
+                this.Location += this.lastDirection * (this.dashDistance);
+            }
+            if (controller.autoPressed)
+            {
+                this.autopaddle = !this.autopaddle;
+            }
 
             KeepPaddleOnScreen();
 
@@ -100,17 +125,21 @@ namespace BreakoutBoring
             ball.Location = new Vector2(this.Location.X + (this.LocationRect.Width/2 - ball.SpriteTexture.Width/2), this.Location.Y - ball.SpriteTexture.Height);
         }
 
+        Vector2 initBallDir;
         private void UpdateCheckBallCollision()
         {
             //Ball Collsion
             //Very simple collision with ball only uses rectangles
-            if (collisionRectangle.Intersects(ball.LocationRect))
+            // check if ball is headed down, avoid spam collisions glitch
+            if (collisionRectangle.Intersects(ball.LocationRect) && (ball.Direction.Y > 0))
             {
-                //TODO Change angle based on location of collision or direction of paddle
+                initBallDir = ball.Direction;
                 ball.Direction.Y *= -1;
                 UpdateBallCollisionBasedOnPaddleImpactLocation();
-                UpdateBallCollisionRandomFuness();
-                console.GameConsoleWrite("Paddle collision ballLoc:" + ball.Location + " paddleLoc:" + this.Location.ToString());
+
+                ScoreManager.ResetMultiplier();
+
+                //console.GameConsoleWrite("Paddle collision ballXDirStart:" + initBallDir.X + " ballXDirEnd:" + ball.Direction.X);
             }
         }
 
@@ -131,7 +160,7 @@ namespace BreakoutBoring
 
         private float GetReflectEntropy()
         {
-            return -1 + ((r.Next(0, 3) - 1) * 0.1f); //return -.9, -1 or -1.1
+            return -1 + ((r.Next(0, 3) - 1) * this.influence); //return -.9, -1 or -1.1
         }
 
         /// <summary>
@@ -139,22 +168,13 @@ namespace BreakoutBoring
         /// </summary>
         private void UpdateBallCollisionBasedOnPaddleImpactLocation()
         {
-            //Change angle based on paddle movement
-            if (this.Direction.X > 0)
-            {
-                ball.Direction.X += .1f;
-            }
-            if (this.Direction.X < 0)
-            {
-                ball.Direction.X -= .1f;
-            }
             //Change anlge based on side of paddle
             //First Third
 
             if ((ball.Location.X > this.Location.X) && (ball.Location.X < this.Location.X + this.spriteTexture.Width / 3))
             {
                 console.GameConsoleWrite("1st Third");
-                ball.Direction.X += .1f;
+                ball.Direction.X -= this.influence;
             }
             if ((ball.Location.X > this.Location.X + (this.spriteTexture.Width / 3)) && (ball.Location.X < this.Location.X + (this.spriteTexture.Width / 3) * 2))
             {
@@ -163,8 +183,13 @@ namespace BreakoutBoring
             if ((ball.Location.X > (this.Location.X + (this.spriteTexture.Width / 3) * 2)) && (ball.Location.X < this.Location.X + (this.spriteTexture.Width)))
             {
                 console.GameConsoleWrite("3rd third");
-                ball.Direction.X -= .1f;
+                ball.Direction.X += this.influence;
             }
+
+            ball.Direction.X = Math.Clamp(ball.Direction.X, -1 - (this.maxInfluenceFactor * this.influence), 1 + (this.maxInfluenceFactor * this.influence));
+
+            //not fun!
+            //ball.Direction.Normalize();
         }
 
         private void KeepPaddleOnScreen()

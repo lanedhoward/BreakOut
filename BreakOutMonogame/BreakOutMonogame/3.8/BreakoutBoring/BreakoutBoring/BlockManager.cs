@@ -41,9 +41,10 @@ namespace BreakoutBoring
         /// <summary>
         /// Replacable Method to Load a Level by filling the Blocks List with Blocks
         /// </summary>
-        protected virtual void LoadLevel()
+        public virtual void LoadLevel()
         {
-            CreateBlockArrayByWidthAndHeight(24, 2, 1);
+            CreateBlockArrayByWidthAndHeight(24, 4, 1);
+            //CreateBlockArrayByWidthAndHeight(1, 1, 1);
         }
 
         /// <summary>
@@ -76,6 +77,10 @@ namespace BreakoutBoring
             UpdateBlocks(gameTime);
             UpdateRemoveDisabledBlocks();
             
+            if (Blocks.Count == 0)
+            {
+                ScoreManager.EndGame();
+            }
 
             base.Update(gameTime);
         }
@@ -97,29 +102,34 @@ namespace BreakoutBoring
             foreach (var block in blocksToRemove)
             {
                 Blocks.Remove(block);
-                ScoreManager.Score++;
             }
             blocksToRemove.Clear();
         }
 
         private void UpdateCheckBlocksForCollision(GameTime gameTime)
         {
-            foreach (MonogameBlock b in Blocks)
+            if (ball.State == BallState.Playing) 
             {
-                if (b.Enabled) //Only chack active blocks
+                foreach (MonogameBlock b in Blocks)
                 {
-                    b.Update(gameTime); //Update Block
-                    //Ball Collision
-                    if (b.Intersects(ball)) //chek rectagle collision between ball and current block 
+                    if (b.Enabled) //Only chack active blocks
                     {
-                        //hit
-                        b.HitByBall(ball);
-                        if(b.BlockState == BlockState.Broken)
-                            blocksToRemove.Add(b);  //Ball is hit add it to remove list
-                        if (!reflected) //only reflect once
+                        b.Update(gameTime); //Update Block
+                                            //Ball Collision
+                        if (b.Intersects(ball)) //chek rectagle collision between ball and current block 
                         {
-                            ball.Reflect(b);
-                            this.reflected = true;
+                            //hit
+                            b.HitByBall(ball);
+                            if (b.BlockState == BlockState.Broken)
+                            {
+                                blocksToRemove.Add(b);  //Ball is hit add it to remove list
+                                ScoreManager.HitBlock();
+                            }
+                            if (!reflected) //only reflect once
+                            {
+                                ball.Reflect(b);
+                                this.reflected = true;
+                            }
                         }
                     }
                 }
@@ -138,6 +148,12 @@ namespace BreakoutBoring
                     block.Draw(gameTime);
             }
             base.Draw(gameTime);
+        }
+
+        public void ResetBlocks()
+        {
+            blocksToRemove.AddRange(Blocks);
+            Blocks.Clear();
         }
     }
 }

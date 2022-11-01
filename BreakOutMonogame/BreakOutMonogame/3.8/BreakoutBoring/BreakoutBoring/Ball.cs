@@ -58,11 +58,15 @@ namespace BreakoutBoring
             base.LoadContent();
         }
 
-        private void resetBall(GameTime gameTime)
+        public void resetBall(GameTime gameTime)
+        {
+            resetBall();
+            this.console.GameConsoleWrite("Ball Reset " + gameTime.TotalGameTime.ToString());
+        }
+        public void resetBall()
         {
             this.Speed = 0;
-            this.State =  BallState.OnPaddleStart;
-            this.console.GameConsoleWrite("Ball Reset " + gameTime.TotalGameTime.ToString());
+            this.State = BallState.OnPaddleStart;
         }
 
         public override void Update(GameTime gameTime)
@@ -80,8 +84,14 @@ namespace BreakoutBoring
             base.Update(gameTime);
         }
 
+
+        bool reflectedX = false;
+        bool reflectedY = false;
         private void UpdateBall(GameTime gameTime)
         {
+            reflectedX = false;
+            reflectedY = false;
+
             this.Location += this.Direction * (this.Speed * gameTime.ElapsedGameTime.Milliseconds / 1000);
 
             //bounce off wall
@@ -96,6 +106,7 @@ namespace BreakoutBoring
             if (this.Location.Y + this.spriteTexture.Height > this.Game.GraphicsDevice.Viewport.Height)
             {
                 this.resetBall(gameTime);
+                ScoreManager.LoseLife();
             }
 
             //Top
@@ -107,7 +118,35 @@ namespace BreakoutBoring
 
         public void Reflect(MonogameBlock block)
         {
-            this.Direction.Y *= -1; //TODO check for side collision with block
+            
+            // find center of ball and center of block
+            // todo: refactor and add a FindCenter method to sprite class
+            Vector2 ballCenter = new Vector2(Location.X + spriteTexture.Width / 2, Location.Y + spriteTexture.Height / 2);
+            Vector2 blockCenter = new Vector2(block.Location.X + block.spriteTexture.Width / 2, block.Location.Y + block.spriteTexture.Height / 2);
+
+            // get vertical and horizontal distance between centers
+            float hDistance = blockCenter.X - ballCenter.X;
+            float vDistance = blockCenter.Y - ballCenter.Y;
+
+            // reflect along the largest difference
+            if (Math.Abs(hDistance) > Math.Abs(vDistance))
+            {
+                //horizontal biggest, must be a side bounce
+                if (reflectedX == false && reflectedY == false)
+                {
+                    this.Direction.X *= -1;
+                    reflectedX = true;
+                }
+            }
+            else
+            {
+                //vertical biggeest, must be a top/bottom bounce
+                if (reflectedX == false && reflectedY == false)
+                {
+                    this.Direction.Y *= -1;
+                    reflectedY = true;
+                }
+            }
         }
 
     }

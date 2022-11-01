@@ -1,0 +1,20 @@
+﻿LANE BREAKOUT DOCUMENTATION
+
+Goals:
+	-Proper collisions with the sides of blocks
+		-done!
+		-some mild imperfections when it comes to multiple block collisions at once, but i think it is fine for now
+	-Combo multiplier for hitting multiple blocks with just one paddle hit
+		-done!
+		-combo scales exponentially to really reward combos
+	-High control / high level of influence over paddle bounces
+		-done!
+		-influence ball x dir based on where on the paddle you hit
+	-Double tap to dash the paddle in a direction
+		-going to bind to a dedicated dash button. since sometimes double taps are needed for precise movements
+		-dash is more like a short teleport. same effect.
+
+other notes:
+	-Made a few methods such as scoremanager.setupnewgame() and Ball.resetBall() public so the game can use it.
+		-could have made a GameManager class but it is close to the deadline so i just put logic in the Game1 class
+	-autopaddle is toggleable by pressing A
