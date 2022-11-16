@@ -1,0 +1,16 @@
+breakout documentation
+
+most of it is the same as my monogame.
+
+had to add a GameState, just put that in scoremanager since it was already static.
+but it should probably go elsewhere.
+
+made the paddle bounce via halves instead of thirds. idk if this is better or not.
+
+still can dash with spacebar.
+
+have to press Up to respawn the ball, and then Up again to shoot it.
+
+a lot of logic abouot restarting the game went into the BallController class, which
+i think is wrong. I think Input stuff should go with the paddle since the paddle is the player character.
+
